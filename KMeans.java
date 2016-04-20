@@ -1,10 +1,17 @@
-/**
- * Created by Alexander Dang on 4/6/2016.
- */
+/*
+ * KMeans.java ; Cluster.java ; Point.java
+ *
+ * Solution implemented by DataOnFocus
+ * www.dataonfocus.com
+ * 2015
+ *
+*/
+//package com.dataonfocus.clustering;
+
 import java.util.ArrayList;
 import java.util.List;
 
-// import com.dataonfocus.clustering.Point;
+//import com.dataonfocus.clustering.Point;
 
 public class KMeans {
 
@@ -51,7 +58,7 @@ public class KMeans {
 
     private void plotClusters() {
         for (int i = 0; i < NUM_CLUSTERS; i++) {
-            Cluster c = clusters.get(i);
+            Cluster c = (Cluster) clusters.get(i);
             c.plotCluster();
         }
     }
@@ -80,7 +87,7 @@ public class KMeans {
 
             //Calculates total distance between new and old Centroids
             double distance = 0;
-            for(int i = 0; i &lt; lastCentroids.size(); i++) {
+            for(int i = 0; i < lastCentroids.size(); i++) {
                 distance += Point.distance(lastCentroids.get(i),currentCentroids.get(i));
             }
             System.out.println("#################");
@@ -95,15 +102,15 @@ public class KMeans {
     }
 
     private void clearClusters() {
-        for(Cluster cluster : clusters) {
-            cluster.clear();
+        for(Object cluster : clusters) {
+            ((Cluster) cluster).clear();
         }
     }
 
     private List getCentroids() {
         List centroids = new ArrayList(NUM_CLUSTERS);
-        for(Cluster cluster : clusters) {
-            Point aux = cluster.getCentroid();
+        for(Object cluster : clusters) {
+            Point aux = ((Cluster) cluster).getCentroid();
             Point point = new Point(aux.getX(),aux.getY());
             centroids.add(point);
         }
@@ -116,35 +123,35 @@ public class KMeans {
         int cluster = 0;
         double distance = 0.0;
 
-        for(Point point : points) {
+        for(Object point : points) {
             min = max;
-            for(int i = 0; i &lt; NUM_CLUSTERS; i++) {
-                Cluster c = clusters.get(i);
+            for(int i = 0; i < NUM_CLUSTERS; i++) {
+                Cluster c = (Cluster) clusters.get(i);
                 distance = Point.distance(point, c.getCentroid());
-                if(distance &lt; min){
+                if(distance < min){
                     min = distance;
                     cluster = i;
                 }
             }
-            point.setCluster(cluster);
-            clusters.get(cluster).addPoint(point);
+            ((Point) point).setCluster(cluster);
+            ((Cluster) clusters.get(cluster)).addPoint((Point) point);
         }
     }
 
     private void calculateCentroids() {
-        for(Cluster cluster : clusters) {
+        for(Object cluster : clusters) {
             double sumX = 0;
             double sumY = 0;
-            List list = cluster.getPoints();
+            List list = ((Cluster) cluster).getPoints();
             int n_points = list.size();
 
-            for(Point point : list) {
-                sumX += point.getX();
-                sumY += point.getY();
+            for(Object point : list) {
+                sumX += ((Point) point).getX();
+                sumY += ((Point) point).getY();
             }
 
-            Point centroid = cluster.getCentroid();
-            if(n_points &gt; 0) {
+            Point centroid = ((Cluster) cluster).getCentroid();
+            if(n_points > 0) {
                 double newX = sumX / n_points;
                 double newY = sumY / n_points;
                 centroid.setX(newX);

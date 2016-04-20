@@ -45,8 +45,8 @@ public class Point {
     }
 
     //Calculates the distance between two points.
-    protected static double distance(Point p, Point centroid) {
-        return Math.sqrt(Math.pow((centroid.getY() - p.getY()), 2) + Math.pow((centroid.getX() - p.getX()), 2));
+    protected static double distance(Object object, Object object2) {
+        return Math.sqrt(Math.pow((((Point) object2).getY() - ((Point) object).getY()), 2) + Math.pow((((Point) object2).getX() - ((Point) object).getX()), 2));
     }
 
     //Creates random point
