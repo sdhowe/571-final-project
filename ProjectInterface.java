@@ -37,9 +37,13 @@ public class ProjectInterface extends JFrame {
                 switch (algorithmIndex) {
                     case 0:
                         System.out.println("Selected algorithm: " + combo);
+                        long startTime = System.nanoTime();
                         KMeans kmeans = new KMeans(kValue);
                         kmeans.init(kValue);
                         kmeans.calculate(kValue);
+                        long endTime = System.nanoTime();
+                        long duration = (endTime - startTime) / 1000000;
+                        System.out.println("Time to run: " + duration + "ms");
                         break;
                     case 1:
                         System.out.println("Selected algorithm: " + combo);
