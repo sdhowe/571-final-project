@@ -39,7 +39,9 @@ public class ProjectInterface extends JFrame {
 
                 //String combo = obj.toString();
 
+                // Decide which algorithm to execute
                 switch (algorithmIndex) {
+                    // Kmeans algorithm
                     case 0:
                         //System.out.println("Selected algorithm: " + combo);
                         long startTime = System.nanoTime();
@@ -50,11 +52,27 @@ public class ProjectInterface extends JFrame {
                         long duration = (endTime - startTime) / 1000000;
                         System.out.println("Time to run: " + duration + "ms");
                         break;
+                    // Hierarchical Clustering algorithm (complete linkage)
                     case 1:
                         //System.out.println("Selected algorithm: " + combo);
+                        long startTime1 = System.nanoTime();
+                        DendrogramPanel hccluster = new DendrogramPanel();
+                        hccluster.startHCCluster();
+                        long endTime1 = System.nanoTime();
+                        long duration1 = (endTime1 - startTime1) / 1000000;
+                        System.out.println("Time to run: " + duration1 + "ms");
                         break;
+                    // Hierarchical Clustering algorithm (average linkage)
                     case 2:
                         //System.out.println("Selected algorithm: " + combo);
+
+                        // Awfully redundant, yes... But for now refactoring is not a priority
+                        long startTime2 = System.nanoTime();
+                        DendrogramPanel hccluster1 = new DendrogramPanel();
+                        hccluster1.startHCClusterAverage();
+                        long endTime2 = System.nanoTime();
+                        long duration2 = (endTime2 - startTime2) / 1000000;
+                        System.out.println("Time to run: " + duration2 + "ms");
                         break;
                     case 3:
                         //System.out.println("Selected algorithm: " + combo);

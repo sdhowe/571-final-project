@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2013 Lars Behnke
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -271,7 +271,7 @@ public class DendrogramPanel extends JPanel {
         }
     }
 
-    public static void main(String[] args) {
+    public void startHCCluster() {
         JFrame frame = new JFrame();
         frame.setSize(400, 300);
         frame.setLocation(400, 300);
@@ -295,18 +295,60 @@ public class DendrogramPanel extends JPanel {
         frame.setVisible(true);
     }
 
+    // Awfully redundant, yes... But for now refactoring is not a priority
+    public void startHCClusterAverage() {
+        JFrame frame = new JFrame();
+        frame.setSize(400, 300);
+        frame.setLocation(400, 300);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        JPanel content = new JPanel();
+        DendrogramPanel dp = new DendrogramPanel();
+
+        frame.setContentPane(content);
+        content.setBackground(Color.red);
+        content.setLayout(new BorderLayout());
+        content.add(dp, BorderLayout.CENTER);
+        dp.setBackground(Color.WHITE);
+        dp.setLineColor(Color.BLACK);
+        dp.setScaleValueDecimals(0);
+        dp.setScaleValueInterval(1);
+        dp.setShowDistances(false);
+
+        HCCluster cluster = createSampleClusterAverage();
+        dp.setModel(cluster);
+        frame.setVisible(true);
+    }
+
     private static HCCluster createSampleCluster() {
-        double[][] distances = new double[][] { 
-        		{ 0, 1, 9, 7, 11, 14 }, 
-        		{ 1, 0, 4, 3, 8, 10 }, 
-        		{ 9, 4, 0, 9, 2, 8 },
-                { 7, 3, 9, 0, 6, 13 }, 
-                { 11, 8, 2, 6, 0, 10 }, 
-                { 14, 10, 8, 13, 10, 0 } 
-                };
-        String[] names = new String[] { "O1", "O2", "O3", "O4", "O5", "O6" };
+        double[][] distances = new double[][]{
+                {0, 1, 9, 7, 11, 14},
+                {1, 0, 4, 3, 8, 10},
+                {9, 4, 0, 9, 2, 8},
+                {7, 3, 9, 0, 6, 13},
+                {11, 8, 2, 6, 0, 10},
+                {14, 10, 8, 13, 10, 0}
+        };
+        String[] names = new String[]{"O1", "O2", "O3", "O4", "O5", "O6"};
         ClusteringAlgorithm alg = new DefaultClusteringAlgorithm();
         HCCluster cluster = alg.performClustering(distances, names, new CompleteLinkageStrategy());
+        cluster.toConsole(0);
+        return cluster;
+    }
+
+    // Awfully redundant, yes... But for now refactoring is not a priority
+    private static HCCluster createSampleClusterAverage() {
+        double[][] distances = new double[][] {
+                { 0, 1, 9, 7, 11, 14 },
+                { 1, 0, 4, 3, 8, 10 },
+                { 9, 4, 0, 9, 2, 8 },
+                { 7, 3, 9, 0, 6, 13 },
+                { 11, 8, 2, 6, 0, 10 },
+                { 14, 10, 8, 13, 10, 0 }
+        };
+        String[] names = new String[] { "O1", "O2", "O3", "O4", "O5", "O6" };
+        ClusteringAlgorithm alg = new DefaultClusteringAlgorithm();
+        HCCluster cluster = alg.performClustering(distances, names, new AverageLinkageStrategy());
         cluster.toConsole(0);
         return cluster;
     }
