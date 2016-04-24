@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.PrintStream;
-import dataset.java;
 
 /**
  * Created by Alexander Dang on 4/3/2016.
@@ -11,10 +10,10 @@ public class ProjectInterface extends JFrame {
     private JComboBox comboBox1;
     private JButton simulateButton;
     private JSpinner spinner1;
-    private JComboBox comboBox2;
     private JPanel rootPanel;
     private JTextArea textArea1;
     private JScrollPane scrollPane;
+    private JComboBox comboBox2;
     private PrintStream standardOut;
 
     public ProjectInterface() {
@@ -33,8 +32,8 @@ public class ProjectInterface extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int kValue = (Integer) spinner1.getValue();
-                int dataSize = (Integer) //needs to have some way of specifying dataset size in GUI, no more than 100.
-                Object obj = comboBox1.getSelectedItem();
+                int dataSize = Integer.parseInt((String) comboBox2.getSelectedItem());
+                        Object obj = comboBox1.getSelectedItem();
 
                 int algorithmIndex = comboBox1.getSelectedIndex();
 

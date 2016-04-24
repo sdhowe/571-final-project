@@ -44,8 +44,8 @@ public class KMeans {
     public void init(int k, int dataset) {
         //Create Points
         //points = Point.createRandomPoints(MIN_COORDINATE,MAX_COORDINATE,NUM_POINTS);
-        points = Point.parseData(dataset); 
-        
+        points = Point.parseData(dataset);
+
         //Create Clusters
         //Set Random Centroids
         for (int i = 0; i < k; i++) {

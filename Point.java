@@ -7,7 +7,6 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import Dataset;
 
 public class Point {
 
@@ -69,12 +68,14 @@ public class Point {
     public String toString() {
         return "("+x+","+y+")";
     }
-    
+
     protected static List parseData(int d){
+        List points = new ArrayList(d);
         for(int i = 0; i < d; i=i+2){
-            points.add(Point(Dataset.dataset[i],Dataset.dataset[i+1];
+            Point point = new Point(Dataset.dataset[i], Dataset.dataset[i+1]);
+            points.add(point);
         }
         return points;
     }
-        
+
 }
