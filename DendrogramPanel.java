@@ -24,6 +24,8 @@ import java.awt.geom.Rectangle2D;
 
 import javax.swing.*;
 
+import Dataset;
+
 public class DendrogramPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;

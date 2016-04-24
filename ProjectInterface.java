@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.PrintStream;
+import dataset.java;
 
 /**
  * Created by Alexander Dang on 4/3/2016.
@@ -32,7 +33,7 @@ public class ProjectInterface extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int kValue = (Integer) spinner1.getValue();
-
+                int dataSize = (Integer) //needs to have some way of specifying dataset size in GUI, no more than 100.
                 Object obj = comboBox1.getSelectedItem();
 
                 int algorithmIndex = comboBox1.getSelectedIndex();
@@ -46,7 +47,7 @@ public class ProjectInterface extends JFrame {
                         //System.out.println("Selected algorithm: " + combo);
                         long startTime = System.nanoTime();
                         KMeans kmeans = new KMeans(kValue);
-                        kmeans.init(kValue);
+                        kmeans.init(kValue, dataSize);
                         kmeans.calculate(kValue);
                         long endTime = System.nanoTime();
                         long duration = (endTime - startTime) / 1000000;
