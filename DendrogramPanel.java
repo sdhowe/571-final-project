@@ -25,6 +25,7 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.*;
 
 import Dataset;
+import java.lang.Math;
 
 public class DendrogramPanel extends JPanel {
 
@@ -273,7 +274,7 @@ public class DendrogramPanel extends JPanel {
         }
     }
 
-    public void startHCCluster() {
+    public void startHCCluster(int d) {
         JFrame frame = new JFrame();
         frame.setSize(400, 300);
         frame.setLocation(400, 300);
@@ -292,7 +293,7 @@ public class DendrogramPanel extends JPanel {
         dp.setScaleValueInterval(1);
         dp.setShowDistances(false);
 
-        HCCluster cluster = createSampleCluster();
+        HCCluster cluster = createSampleCluster(d);
         dp.setModel(cluster);
         frame.setVisible(true);
     }
@@ -322,16 +323,27 @@ public class DendrogramPanel extends JPanel {
         frame.setVisible(true);
     }
 
-    private static HCCluster createSampleCluster() {
-        double[][] distances = new double[][]{
+    private static HCCluster createSampleCluster(int d) {
+        /*double[][] distances = new double[][]{
                 {0, 1, 9, 7, 11, 14},
                 {1, 0, 4, 3, 8, 10},
                 {9, 4, 0, 9, 2, 8},
                 {7, 3, 9, 0, 6, 13},
                 {11, 8, 2, 6, 0, 10},
                 {14, 10, 8, 13, 10, 0}
-        };
-        String[] names = new String[]{"O1", "O2", "O3", "O4", "O5", "O6"};
+        };*/
+        //gonna use the dataset and iterativly calculate distances between points
+        double[][] distances = new double[d][d];
+        for(int i = 0; i<d; i++){
+            for(int j = i; j<d; j++){
+                distances[i][j] = Math.sqrt(((Dataset.dataset[2*j] - Dataset.dataset[2*i])**2) + ((Dataset.dataset[(2*j)+1] - Dataset.dataset[(2*i)+1])**2));//find the euclidean distance
+                distances[j][i] = distances[i][j];//no need to double count
+            }
+        }
+        String[] names = new String[d];
+        for (int i = 0; i<d; i++){
+            names[i] = Integer.toString(i);
+        }
         ClusteringAlgorithm alg = new DefaultClusteringAlgorithm();
         HCCluster cluster = alg.performClustering(distances, names, new CompleteLinkageStrategy());
         cluster.toConsole(0);
@@ -340,15 +352,25 @@ public class DendrogramPanel extends JPanel {
 
     // Awfully redundant, yes... But for now refactoring is not a priority
     private static HCCluster createSampleClusterAverage() {
-        double[][] distances = new double[][] {
+        /*double[][] distances = new double[][] {
                 { 0, 1, 9, 7, 11, 14 },
                 { 1, 0, 4, 3, 8, 10 },
                 { 9, 4, 0, 9, 2, 8 },
                 { 7, 3, 9, 0, 6, 13 },
                 { 11, 8, 2, 6, 0, 10 },
                 { 14, 10, 8, 13, 10, 0 }
-        };
-        String[] names = new String[] { "O1", "O2", "O3", "O4", "O5", "O6" };
+        };*/
+        double[][] distances = new double[d][d];
+        for(int i = 0; i<d; i++){
+            for(int j = i; j<d; j++){
+                distances[i][j] = Math.abs(Dataset.dataset[2*j] - Dataset.dataset[2*i])) + Math.abs(Dataset.dataset[(2*j)+1] - Dataset.dataset[(2*i)+1]);//find the manhattan distance
+                distances[j][i] = distances[i][j];//no need to double count
+            }
+        }
+        String[] names = new String[d];
+        for (int i = 0; i<d; i++){
+            names[i] = Integer.toString(i);
+        }
         ClusteringAlgorithm alg = new DefaultClusteringAlgorithm();
         HCCluster cluster = alg.performClustering(distances, names, new AverageLinkageStrategy());
         cluster.toConsole(0);

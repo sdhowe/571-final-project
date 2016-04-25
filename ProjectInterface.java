@@ -57,7 +57,7 @@ public class ProjectInterface extends JFrame {
                         //System.out.println("Selected algorithm: " + combo);
                         long startTime1 = System.nanoTime();
                         DendrogramPanel hccluster = new DendrogramPanel();
-                        hccluster.startHCCluster();
+                        hccluster.startHCCluster(dataSize);
                         long endTime1 = System.nanoTime();
                         long duration1 = (endTime1 - startTime1) / 1000000;
                         System.out.println("Time to run: " + duration1 + "ms");
@@ -69,7 +69,7 @@ public class ProjectInterface extends JFrame {
                         // Awfully redundant, yes... But for now refactoring is not a priority
                         long startTime2 = System.nanoTime();
                         DendrogramPanel hccluster1 = new DendrogramPanel();
-                        hccluster1.startHCClusterAverage();
+                        hccluster1.startHCClusterAverage(dataSize);
                         long endTime2 = System.nanoTime();
                         long duration2 = (endTime2 - startTime2) / 1000000;
                         System.out.println("Time to run: " + duration2 + "ms");
